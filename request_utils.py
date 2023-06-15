@@ -8,6 +8,7 @@ import io
 
 import requests
 from PIL import Image
+from loguru import logger
 from requests_toolbelt import MultipartEncoder
 
 
@@ -44,8 +45,11 @@ def get_image_url(ip: str, port: str, image):
 # 检测到调用这个方法给java返回消息
 def request_api(camera_ip, scene_id, happen_time, violation_img_url, violation_worker, user_ip, user_port):
     request_content = dict()
+    # 相机ip
     request_content["cameraIp"] = camera_ip
+    # 检测到的目标类型——对应项目中的场景类型id
     request_content["sceneId"] = scene_id
+
     request_content["happenedTime"] = happen_time
     request_content["violationWorker"] = violation_worker
     request_content["violationImg"] = violation_img_url
@@ -53,11 +57,32 @@ def request_api(camera_ip, scene_id, happen_time, violation_img_url, violation_w
     # 发送HTTP POST请求到后端
     url = 'http://' + user_ip + ':' + user_port + '/system/scene/monitorrecord/add'
     response = requests.post(url, json=request_content)
+    logger.debug("请求结果：{}".format(response.text))
     return response
 
 
-# 场景序号映射
+# 检测类型与项目场景序号映射
 scene_mapping = {
     "unloaded": 2,
     "coal_lump": 4
+}
+
+
+camera_info = {
+    "192.168.45.3": "301",
+    "192.168.45.4": "901",
+    "192.168.45.5": "1001",
+    "192.168.45.6": "1101",
+    "192.168.45.7": "1201",
+    "192.168.45.8": "1301",
+    "192.168.45.9": "2701",
+    "192.168.45.10": "2801",
+    "192.168.45.11": "2601",
+    "192.168.45.12": "1701",
+    "192.168.45.13": "1801",
+    "192.168.45.14": "3601",
+    "192.168.45.15": "2101",
+    "192.168.45.16": "3501",
+    # "192.168.45.17": "",
+    "192.168.45.18": "3801"
 }

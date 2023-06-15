@@ -90,13 +90,17 @@ class Predictor(object):
         cls = cls.tolist()
         scores = scores.tolist()
 
+        norm = []
         for i in range(len(bboxes)):
-            bboxes[i].append(cls[i])
-            bboxes[i].append(scores[i])
+            if scores[i] >= cls_conf:
+                bboxes[i].append(cls[i])
+                bboxes[i].append(scores[i])
+                norm.append(bboxes[i])
+
 
         # 最终结果json
         result = dict()
-        result["norm"] = bboxes
+        result["norm"] = norm
         result["ori"] = ori
 
         return result
@@ -140,4 +144,4 @@ def load_model(exp_path, ckpt_path, fp16=False, conf=0.3, nms=0.45, inp_size=416
     # load the model state dict
     model.load_state_dict(ckpt["model"])
 
-    return Predictor(model, exp, CUS_CLASSES, None, device, False, False)
+    return Predictor(model, exp, CUS_CLASSES, None, device, fp16, False)

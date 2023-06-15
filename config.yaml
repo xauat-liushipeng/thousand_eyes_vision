@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+# python服务配置文件
+
+#InputType: "video"  # 输入类型：video或camera
+#VideoPath: "E:/video/20230609_172203.mp4"  # 摄像机ip地址如192.168.1.53，或视频文件路径
+InputType: "camera"  # 输入类型：video或camera
+VideoPath: "192.168.45.16"  # 摄像机ip地址如192.168.1.53，或视频文件路径
+
+SavePath: "./example.mp4"
+
+UserIp: "192.168.1.31"  # 图片上传和接口请求ip
+UserPort: "8500"  # 图片上传和接口请求port
+
+ModelConfig: "./exps/yolox_s.py"  # 模型配置文件路径
+ModelWeights: "./ckpts/1000eyes_3.pth"  # 模型权重文件路径
+
+Visualize: True  # 是否可视化并保存视频，启动命令不含该参数时为false，否则为true
+#Request: True  # 检测到目标是否需要请求后端发送数据，启动命令不含该参数时为false，否则为true
+Request: False  # 检测到目标是否需要请求后端发送数据，启动命令不含该参数时为false，否则为true
