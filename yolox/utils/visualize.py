@@ -7,13 +7,20 @@ import numpy as np
 
 __all__ = ["vis"]
 
+from loguru import logger
+
 
 def vis(img, boxes, scores, cls_ids, conf=0.5, class_names=None):
-
+    logger.debug("cls_id: {} | scores: {}".format(cls_ids, scores))
     for i in range(len(boxes)):
         box = boxes[i]
         cls_id = int(cls_ids[i])
         score = scores[i]
+
+        # 过滤类型为worker且置信度低于0.8的box
+        if cls_id == 2 and score < 0.8:
+            continue
+
         if score < conf:
             continue
         x0 = int(box[0])

@@ -114,7 +114,7 @@ def image_inference(predictor, image):
     return result
 
 
-def load_model(exp_path, ckpt_path, fp16=False, conf=0.3, nms=0.45, inp_size=416):
+def load_model(exp_path, ckpt_path, fp16=False, conf=0.3, nms=0.45, inp_size=416, cuda=False):
     # 模型配置文件
     exp = get_exp(exp_path)
     # 模型权重文件
@@ -126,7 +126,7 @@ def load_model(exp_path, ckpt_path, fp16=False, conf=0.3, nms=0.45, inp_size=416
     exp.test_size = (inp_size, inp_size)
 
     # 设备类型
-    if torch.cuda.is_available():
+    if cuda:
         device = "gpu"
     else:
         device = "cpu"

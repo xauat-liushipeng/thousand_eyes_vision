@@ -38,6 +38,7 @@ def get_image_url(ip: str, port: str, image):
     form_data = MultipartEncoder(files)  # 格式转换
     header['content-type'] = form_data.content_type
     r = requests.post(url, data=form_data, headers=header)  # 请求
+    logger.success("图片上传地址".format(r.text))
     result = r.json()
     return result['data']['saveAddr']
 
@@ -57,7 +58,7 @@ def request_api(camera_ip, scene_id, happen_time, violation_img_url, violation_w
     # 发送HTTP POST请求到后端
     url = 'http://' + user_ip + ':' + user_port + '/system/scene/monitorrecord/add'
     response = requests.post(url, json=request_content)
-    logger.debug("请求结果：{}".format(response.text))
+    logger.success("请求结果：{}".format(response.text))
     return response
 
 
@@ -69,7 +70,8 @@ scene_mapping = {
 
 
 camera_info = {
-    "192.168.45.3": "301",
+    "192.168.45.3": "401",
+    "192.168.30.28": "301",
     "192.168.45.4": "901",
     "192.168.45.5": "1001",
     "192.168.45.6": "1101",
@@ -84,5 +86,8 @@ camera_info = {
     "192.168.45.15": "2101",
     "192.168.45.16": "3501",
     # "192.168.45.17": "",
-    "192.168.45.18": "3801"
+    "192.168.45.18": "3801",
+
+    # "192.168.1.214": "2901",
+    "192.168.70.31": "201"
 }
